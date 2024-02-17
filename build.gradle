@@ -1,0 +1,50 @@
+plugins {
+  id 'com.axelor.app'
+}
+
+axelor {
+  title = 'Axelor :: DEMO'
+}
+
+allprojects {
+  apply plugin: 'idea'
+  apply plugin: 'eclipse'
+
+  group = 'com.axelor'
+  version = '6.1.0'
+
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(11)
+    }
+  }
+
+  configurations {
+    // Remove Junit4, only keep Junit5 provided by AOP
+    testImplementation.exclude group: 'junit', module: 'junit'
+    testImplementation.exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+  }
+
+  afterEvaluate {
+    test {
+      useJUnitPlatform()
+      beforeTest { descriptor ->
+        logger.lifecycle('Running: ' + descriptor)
+      }
+    }
+  }
+}
+
+dependencies {
+  // add module dependencies
+  implementation project(':modules:demo-contact')
+  implementation project(':modules:demo-sale')
+  implementation project(':modules:demo-project')
+  implementation project(':modules:demo-custom')
+}
+
+war {
+  archiveFileName = 'open-platform-demo.war'
+}
+
+apply from: 'gradle/style.gradle'

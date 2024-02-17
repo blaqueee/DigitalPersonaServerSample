@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views https://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="project-grid" title="Projects" model="com.axelor.project.db.Project">
+    <field name="name" />
+    <field name="parent" />
+    <field name="priority" />
+  </grid>
+
+  <form name="project-form" title="Project" model="com.axelor.project.db.Project">
+    <toolbar>
+      <button name="showGantt" onClick="action-view-show-project-gantt" title="Gantt"/>
+    </toolbar>
+    <panel title="Overview">
+      <field name="name"/>
+      <field name="priority"/>
+      <field name="description"/>
+      <field name="parent"/>
+      <field name="members" widget="TagSelect" canEdit="false" canNew="false"/>
+    </panel>
+    <panel-tabs>
+      <panel-related field="tasks" editable="true">
+        <field name="name" />
+        <field name="createDate" />
+        <field name="startDate" />
+        <field name="endDate" />
+        <field name="user" />
+        <field name="priority" />
+      </panel-related>
+      <panel title="Notes">
+        <field name="notes" showTitle="false" colSpan="12"/>
+      </panel>
+    </panel-tabs>
+  </form>
+
+  <action-view name="action-view-show-project-gantt" title="Gantt" model="com.axelor.project.db.ProjectTask">
+    <view type="gantt" name="project-task-gantt"/>
+    <domain>self.project.id = :_project_id</domain>
+    <context name="_project_id" expr="eval: id"/>
+  </action-view>
+
+</object-views>

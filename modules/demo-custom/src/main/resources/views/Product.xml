@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views https://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <selection id="product.color.selection.custom" name="product.color.selection">
+    <option value="cyan" color="cyan">Cyan</option>
+    <option value="teal" color="teal">Teal</option>
+  </selection>
+
+  <form id="product-form.ext" name="product-form" title="Product"
+    model="com.axelor.sale.db.Product" extension="true">
+    <extend target="panel[@name='overviewPanel']/panel[last()]/field[@name='category']">
+      <insert position="after">
+        <field name="colorVariants" widget="multi-select" colSpan="12"/>
+      </insert>
+    </extend>
+    <extend target="panel[@name='notesPanel']">
+      <insert position="after">
+        <panel-stack showIf="color" itemSpan="12">
+          <panel title="Page 1" showIf="color == 'black'" />
+          <panel title="Page 2" showIf="color == 'white'" />
+          <panel title="Page 3" showIf="color == 'gray'" />
+        </panel-stack>
+      </insert>
+    </extend>
+  </form>
+
+</object-views>

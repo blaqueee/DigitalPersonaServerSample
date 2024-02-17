@@ -1,0 +1,18 @@
+plugins {
+  id 'com.axelor.app'
+}
+
+axelor {
+  title = "Axelor :: Custom"
+
+  description = """\
+Customization module demo.
+
+This is a demo module to provide quick demonstration of customization modules.
+"""
+}
+
+dependencies {
+  api project(":modules:demo-contact")
+  api project(":modules:demo-sale")
+}
